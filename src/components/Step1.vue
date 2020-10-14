@@ -8,42 +8,47 @@
       <div class="content">
         <fieldset>
           <legend>-性別-</legend>
-          <label><input type="radio" name="sex">男性</label>
-          <label><input type="radio" name="sex">女性</label>
+          <label><input type="radio" name="sex" v-model="selectSex" value="男性">男性</label>
+          <label><input type="radio" name="sex" v-model="selectSex" value="女性">女性</label>
         </fieldset>
         <fieldset>
           <legend>-生年月日-</legend>
           <label>
-            <select v-model="selected">
+            <select v-model="selectYear">
             <option v-for="year in years" :key="year.index">{{ year }}</option>
             </select>
           年</label>
           <label>
-            <select>
+            <select v-model="selectMonth">
             <option v-for="month in months" :key="month.index">{{ month }}</option>
             </select>
           月</label>
           <label>
-            <select>
+            <select v-model="selectDay">
             <option v-for="day in days" :key="day.index">{{ day }}</option>
             </select>
           日</label>
         </fieldset>
       </div>
     </div>
-    <div @click="toQuestionnaire" class="button">次へ進む<span>&gt;</span></div>
+    <div @click="toStep2()" class="button">次へ進む<span>&gt;</span></div>
   </div>
 </template>
 
 <script>
 export default {
-  props: ["createYears2"],
+  props: [
+    "userData"
+  ],
   data () {
     return {
       years: [],
       months: [],
       days: [],
-      selected: '1990年 (平成2)',
+      selectSex: this.userData.sex,
+      selectYear: this.userData.year,
+      selectMonth: this.userData.month,
+      selectDay: this.userData.day,
     };
   },
   created() {
@@ -77,8 +82,18 @@ export default {
         this.days.push(i);
       }
     },
-    toQuestionnaire() {
-      this.$router.push('questionnaire');
+    toStep2() {
+      this.$router.push('step2');
+      this.chageUserData();
+    },
+    chageUserData() {
+      this.$emit(
+        "change-user-data",
+        this.selectSex, 
+        this.selectYear,
+        this.selectMonth,
+        this.selectDay,
+      );
     }
   }
 }

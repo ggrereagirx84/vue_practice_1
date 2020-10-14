@@ -8,46 +8,53 @@
       <div class="content" id="content">
         <fieldset>
           <legend>現在、生命保険に加入されていますか？</legend>
-          <label @click="displayQuestion2"><input type="radio" name="insurance">はい</label>
-          <label @click="displayQuestion2"><input type="radio" name="insurance">いいえ</label>
+          <label @click="displayQuestion2"><input type="radio" name="insurance" v-model="selectQuestion1" value="はい">はい</label>
+          <label @click="displayQuestion2"><input type="radio" name="insurance" v-model="selectQuestion1" value="いいえ">いいえ</label>
         </fieldset>
         <template>
           <fieldset v-if="question2">
             <legend>現在入院中ですか。または、最近３か月以内に医師の診察・検査の結果、入院・手術をすすめられたことはありますか？</legend>
-            <label @click="displayQuestion3"><input type="radio" name="hospitalization">はい</label>
-            <label @click="displayQuestion3"><input type="radio" name="hospitalization">いいえ</label>
+            <label @click="displayQuestion3"><input type="radio" name="hospitalization" v-model="selectQuestion2" value="はい">はい</label>
+            <label @click="displayQuestion3"><input type="radio" name="hospitalization" v-model="selectQuestion2" value="いいえ">いいえ</label>
           </fieldset>
         </template>
         <template v-if="question3">
           <fieldset>
             <legend>過去５年以内に、病気やけがで、手術をうけたことまたは継続して７日以上の入院をしたことがありますか？</legend>
-            <label><input type="radio" name="experience">はい</label>
-            <label><input type="radio" name="experience">いいえ</label>
+            <label><input type="radio" name="experience" v-model="selectQuestion3" value="はい">はい</label>
+            <label><input type="radio" name="experience" v-model="selectQuestion3" value="いいえ">いいえ</label>
           </fieldset>
         </template>
       </div>
     </div>
     <div class="buttons">
-    <div @click="toCustomerData" class="button">前へ戻る<span>&gt;</span></div>
-    <div @click="toConsultation" class="button">次へ進む<span>&gt;</span></div>
+    <div @click="toStep1" class="button">前へ戻る<span>&gt;</span></div>
+    <div @click="toStep3" class="button">次へ進む<span>&gt;</span></div>
     </div>
   </div>
 </template>
 
 <script>
 export default {
+  props: [
+    "userData",
+  ],
   data() {
     return{
       question2: false,
       question3: false,
+      selectQuestion1: this.userData.question1,
+      selectQuestion2: this.userData.question2,
+      selectQuestion3: this.userData.question3,
     }
   },
   methods: {
-    toCustomerData() {
+    toStep1() {
       this.$router.push('/');
     },
-    toConsultation() {
-      this.$router.push("consultation");
+    toStep3() {
+      this.$router.push("step3");
+      this.changeQuestion();
     },
     displayQuestion2() {
       this.question2 = true;
@@ -55,6 +62,14 @@ export default {
     displayQuestion3() {
       this.question3 = true;
     },
+    changeQuestion() {
+      this.$emit(
+        "change-question",
+        this.selectQuestion1,
+        this.selectQuestion2,
+        this.selectQuestion3,
+      )
+    }
   }
   
 }

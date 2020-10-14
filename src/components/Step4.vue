@@ -2,34 +2,63 @@
   <div class="body">
     <div class="question">
       <div class="title">
-        <div class="step">STEP3</div>
-        <h1>ご相談内容をご記入ください</h1>
+        <div class="step">STEP4</div>
+        <h1>以下の内容をご確認ください</h1>
       </div>
       <div class="content" id="content">
-        <fieldset>
-          <legend>-ご相談内容-</legend>
-          <textarea></textarea>
-        </fieldset>
+        <h2>-性別-</h2>
+        <p>{{ userData.sex }}</p>
+
+        <h2>-生年月日-</h2>
+        <p>{{ birthday }}</p>
+
+        <h2>-現在生命保険に加入されていますか？-</h2>
+        <p>{{ userData.question1 }}</p>
+
+        <h2>-現在入院中ですか。または、最近３か月以内に医師の診察・検査の結果、入院・手術をすすめられたことはありますか？-</h2>
+        <p>{{ userData.question2 }}</p>
+
+        <h2>-過去５年以内に、病気やけがで、手術をうけたことまたは継続して７日以上の入院をしたことがありますか？-</h2>
+        <p>{{ userData.question3 }}</p>
+
+        <h2>-ご相談内容-</h2>
+        <p>{{ userData.content }}</p>
+
       </div>
     </div>
     <div class="buttons">
-    <div @click="toQuestionnaire" class="button">前へ戻る<span>&gt;</span></div>
-    <div class="button">次へ進む<span>&gt;</span></div>
+      <div @click="toStep3" class="button">
+        前へ戻る
+        <span>&gt;</span>
+      </div>
+      <div class="button">
+        送信
+        <span>&gt;</span>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 export default {
+  props: [
+    "userData"
+  ],
   data() {
     return{
-
+      birthday:''
     }
   },
+  created() {
+    this.createBirthday();
+  },
   methods: {
-    toQuestionnaire() {
-      this.$router.push("questionnaire");
+    toStep3() {
+      this.$router.push("step3");
     },
+    createBirthday() {
+      this.birthday = `${this.userData.year}年 ${this.userData.month}月${this.userData.day}日` ;
+    }
   }
   
 }
@@ -42,7 +71,7 @@ export default {
   }
   .question {
     width: 1000px;
-    height: 500px;
+    height: 1000px;
     margin: auto;
     border: solid 1px rgb(27, 233, 199);
     border-radius: 5px;
@@ -75,18 +104,16 @@ export default {
   .content {
     height: 340px;
   }
-  fieldset {
-    border: none;
-    height: 100%;
-  }
-  legend {
+  h2 {
+    font-weight: normal;
+    font-size:20px;
     padding: 20px;
     color: rgb(90, 178, 219);
   }
-  textarea {
-    resize: none;
-    width: 100%;
-    height: 100%;
+  p {
+    font-size: 20px;
+    color: #777;
+    padding-left: 40px;
   }
   .button {
     width: 100px;
