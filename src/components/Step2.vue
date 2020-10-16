@@ -40,9 +40,9 @@ export default {
     return{
       question2: false,
       question3: false,
-      selectQuestion1: this.$store.state.question1,
-      selectQuestion2: this.$store.state.question2,
-      selectQuestion3: this.$store.state.question3,
+      selectQuestion1: this.$store.getters.getQuestion1,
+      selectgetuestion2: this.$store.getters.getQuestion2,
+      selectQuestion3: this.$store.getters.getQuestion3,
     }
   },
   methods: {

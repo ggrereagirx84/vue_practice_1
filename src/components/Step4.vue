@@ -7,22 +7,22 @@
       </div>
       <div class="content" id="content">
         <h2>-性別-</h2>
-        <p>{{ $store.state.sex }}</p>
+        <p>{{ $store.getters.getSex }}</p>
 
         <h2>-生年月日-</h2>
         <p>{{ birthday }}</p>
 
         <h2>-現在生命保険に加入されていますか？-</h2>
-        <p>{{ $store.state.question1 }}</p>
+        <p>{{ $store.getters.getQuestion1 }}</p>
 
         <h2>-現在入院中ですか。または、最近３か月以内に医師の診察・検査の結果、入院・手術をすすめられたことはありますか？-</h2>
-        <p>{{ $store.state.question2 }}</p>
+        <p>{{ $store.getters.getQuestion2 }}</p>
 
         <h2>-過去５年以内に、病気やけがで、手術をうけたことまたは継続して７日以上の入院をしたことがありますか？-</h2>
-        <p>{{ $store.state.question3 }}</p>
+        <p>{{ $store.getters.getQuestion3 }}</p>
 
         <h2>-ご相談内容-</h2>
-        <p>{{ $store.state.content }}</p>
+        <p>{{ $store.getters.getContent }}</p>
 
       </div>
     </div>
@@ -54,7 +54,7 @@ export default {
       this.$router.push("step3");
     },
     createBirthday() {
-      this.birthday = `${this.$store.state.year}年 ${this.$store.state.month}月${this.$store.state.day}日` ;
+      this.birthday = `${this.$store.getters.getYear}年 ${this.$store.getters.getMonth}月${this.$store.getters.getDay}日` ;
     }
   }
   

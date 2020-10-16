@@ -42,10 +42,10 @@ export default {
       years: [],
       months: [],
       days: [],
-      selectSex: this.$store.state.sex,
-      selectYear: this.$store.state.year,
-      selectMonth: this.$store.state.month,
-      selectDay: this.$store.state.day,
+      selectSex: this.$store.getters.getSex,
+      selectYear: this.$store.getters.getYear,
+      selectMonth: this.$store.getters.getMonth,
+      selectDay: this.$store.getters.getDay,
     };
   },
   created() {

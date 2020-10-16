@@ -23,7 +23,7 @@
 export default {
   data() {
     return{
-      content: this.$store.state.content
+      content: this.$store.getters.getContent
     }
   },
   methods: {
