@@ -8,7 +8,7 @@
       <div class="content" id="content">
         <fieldset>
           <legend>-ご相談内容-</legend>
-          <textarea v-model="consultation"></textarea>
+          <textarea v-model="content" @change="changeContent"></textarea>
         </fieldset>
       </div>
     </div>
@@ -21,12 +21,9 @@
 
 <script>
 export default {
-  props: [
-    "userData"
-  ],
   data() {
     return{
-      consultation: this.userData.content
+      content: this.$store.state.content
     }
   },
   methods: {
@@ -35,14 +32,10 @@ export default {
     },
     toStep4() {
       this.$router.push("step4");
-      this.changeConsultation();
     },
-    changeConsultation() {
-      this.$emit(
-        "change-consultation",
-        this.consultation
-      )
-    }
+    changeContent() {
+      this.$store.commit('changeContent', this.content);
+    },
   }
   
 }

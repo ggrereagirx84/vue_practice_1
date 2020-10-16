@@ -8,23 +8,23 @@
       <div class="content">
         <fieldset>
           <legend>-性別-</legend>
-          <label><input type="radio" name="sex" v-model="selectSex" value="男性">男性</label>
-          <label><input type="radio" name="sex" v-model="selectSex" value="女性">女性</label>
+          <label><input type="radio" name="sex" v-model="selectSex" value="男性" @change="changeSex">男性</label>
+          <label><input type="radio" name="sex" v-model="selectSex" value="女性" @change="changeSex">女性</label>
         </fieldset>
         <fieldset>
           <legend>-生年月日-</legend>
           <label>
-            <select v-model="selectYear">
+            <select v-model="selectYear" @change="changeYear">
             <option v-for="year in years" :key="year.index">{{ year }}</option>
             </select>
           年</label>
           <label>
-            <select v-model="selectMonth">
+            <select v-model="selectMonth" @change="changeMonth">
             <option v-for="month in months" :key="month.index">{{ month }}</option>
             </select>
           月</label>
           <label>
-            <select v-model="selectDay">
+            <select v-model="selectDay" @change="changeDay">
             <option v-for="day in days" :key="day.index">{{ day }}</option>
             </select>
           日</label>
@@ -37,18 +37,15 @@
 
 <script>
 export default {
-  props: [
-    "userData"
-  ],
   data () {
     return {
       years: [],
       months: [],
       days: [],
-      selectSex: this.userData.sex,
-      selectYear: this.userData.year,
-      selectMonth: this.userData.month,
-      selectDay: this.userData.day,
+      selectSex: this.$store.state.sex,
+      selectYear: this.$store.state.year,
+      selectMonth: this.$store.state.month,
+      selectDay: this.$store.state.day,
     };
   },
   created() {
@@ -82,19 +79,21 @@ export default {
         this.days.push(i);
       }
     },
+    changeSex() {
+      this.$store.commit('changeSex', this.selectSex);
+    },
+    changeYear() {
+      this.$store.commit('changeYear', this.selectYear);
+    },
+    changeMonth() {
+      this.$store.commit('changeMonth', this.selectMonth);
+    },
+    changeDay() {
+      this.$store.commit('changeDay', this.selectDay);
+    },
     toStep2() {
       this.$router.push('step2');
-      this.chageUserData();
     },
-    chageUserData() {
-      this.$emit(
-        "change-user-data",
-        this.selectSex, 
-        this.selectYear,
-        this.selectMonth,
-        this.selectDay,
-      );
-    }
   }
 }
 </script>
